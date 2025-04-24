@@ -4,7 +4,7 @@ from .models import *
 
 admin.site.register([
     Site,
-    Areas,
+    Area,
     SiteManager,
     Service,
     HomeGatewayId
