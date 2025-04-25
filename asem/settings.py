@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'profiles',
     'warehouse',
+    'energy'
     'rest_framework'
 ]
 
