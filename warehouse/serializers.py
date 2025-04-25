@@ -19,7 +19,7 @@ class SiteManagerSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class AreaSeiralizer(ModelSerializer):
+class AreaSerializer(ModelSerializer):
     class Meta:
         model = Area
         fields = '__all__'
@@ -33,6 +33,7 @@ class AreaSeiralizer(ModelSerializer):
         if 'shows_on' not in validated_data:
             validated_data['shows_on'] = validated_data.get('site', instance.site)
         return super().update(instance, validated_data)
+
 
 class HomeGatewayIdSerializer(ModelSerializer):
     class Meta:
