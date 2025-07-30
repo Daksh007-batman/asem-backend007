@@ -1,10 +1,15 @@
+from platform import node
 from django.shortcuts import render
 from rest_framework.viewsets  import ModelViewSet
-from rest_framework.decorators import api_view
+from rest_framework.decorators import APIView
 from profiles.permissions import IsSuperAdmin
 from rest_framework.permissions import IsAuthenticated
 from .models import *
 from .serializers import *
+from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import AllowAny
+from rest_framework.status import *
 # Create your views here.
 
 class SiteViewSet(ModelViewSet):
@@ -56,3 +61,33 @@ class HomeIdGatewayViewSet(ModelViewSet):
     queryset = HomeGatewayId.objects.all()
     serializer_class = HomeGatewayIdSerializer
 
+class ListAllcustomer(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+            customer_id = request.query_params.get('customer')
+            if customer_id is None:
+                raise ValidationError("This query parameter is required.")
+
+            if not Profile.objects.filter(pk=customer_id).exists():
+                raise ValidationError("Customer not found")
+
+            sites = (
+                Site.objects
+                    .filter(customer_id=customer_id)
+                    # .values_list('id', flat=True)
+            )
+            serialized = SiteSerializer(sites, many=True)
+            print(serialized)
+            resp = [
+                {
+                     "site_name": i["name"],
+                    "site_type": i["site_type"],
+                    "site_location": i["location"],
+                    "site_manager": i["site_manager"],
+                } 
+                for i in serialized.data
+            ]
+
+            return Response({"data": resp}, status=HTTP_200_OK)
+    

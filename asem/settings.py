@@ -39,9 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Custom Apps
     'profiles',
     'warehouse',
-    'energy'
+    'energy',
+
+    # Rest Framework 
     'rest_framework'
 ]
 
@@ -128,12 +131,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
 # Dafault User Model
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth
 
 AUTH_USER_MODEL = 'profiles.Profile'
-
 
 # REST Framework Configurations
 # https://www.django-rest-framework.org/#example
@@ -152,7 +153,7 @@ REST_FRAMEWORK = {
 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),   # 30-day access token
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=60),  # Optional: adjust refresh token too
-    'AUTH_HEADER_TYPES': ('Bearer',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),  
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
+    'AUTH_HEADER_TYPES': ('Bearer')
 }
